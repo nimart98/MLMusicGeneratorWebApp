@@ -1,0 +1,19 @@
+body{
+  background-image: linear-gradient(to right, #434343 0%, black 100%);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1{
+  color: black;
+  font-weight: bold;
+}
+
+.turntable {
+  width: 25%;
+  height: auto;
+  margin-top: 8%;
+}
+
+.distance {
+  margin-top: 17%;
+}
