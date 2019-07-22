@@ -1,38 +1,70 @@
-# Classical Piano Composer
+# ML Music Generator - Web App
 
-This project allows you to train a neural network to generate midi music files that make use of a single instrument
+This web app is capable of generating pieces of music as a WAV audiofile with a machine learning algorithm that was
+trained with 20 songs of popular artists.
 
 ## Requirements
 
-* Python 3.x
-* Installing the following packages using pip:
-	* Music21
-	* Keras
-	* Tensorflow
-	* h5py
+To get this web app running, you need to install the node.js and python dependencies.
 
-## Training
-
-To train the network you run **lstm.py**.
-
-E.g.
-
+For node.js:
 ```
-python lstm.py
+npm install
 ```
 
-The network will use every midi file in ./midi_songs to train the network. The midi files should only contain a single instrument to get the most out of the training.
-
-**NOTE**: You can stop the process at any point in time and the weights from the latest completed epoch will be available for text generation purposes.
-
-## Generating music
-
-Once you have trained the network you can generate text using **predict.py**
-
-E.g.
-
+For python (with pip):
 ```
-python predict.py
+pip install music21
+pip install keras
+pip install tensorflow
+pip install h5py
 ```
 
-You can run the prediction file right away using the **weights.hdf5** file
+Optionally, if you want to get faster generation, you can install the GPU-version of TensorFlow. This will only
+work, if you have a supported graphics card, with the additional software and drivers installed.
+```
+pip install tensorflow-gpu
+```
+
+### Getting Started
+
+To run the app, simply start the app.js file with node.js
+The app is running by default on port 3000.
+
+```javascript
+app.listen(3000);
+```
+To go to the webpage type loclahost:3000 into your browser.
+
+The model generates midi files by running the Python Tensoreflow Model.
+
+```javascript
+   PythonShell.run('predict.py', options, function (err) {
+            if (err) throw err;
+            resolve('done');
+```
+
+These will be then converted to wav files with synth-js.
+
+```javascript
+let convertToMidi = function () {
+    let midiBuffer = fs.readFileSync('Classical-Piano-Composer-master/pytest_output.mid');
+    let wavBuffer = synth.midiToWav(midiBuffer).toBuffer();
+    fs.writeFileSync('./assets/song.wav', wavBuffer, { encoding: 'binary' });
+```
+
+```
+node app.js
+```
+
+## Authors
+
+* **Lennart Paul**
+* **Nicolas Martin**
+
+## Acknowledgments
+
+Thanks to Sigurður [Skúli Sigurgeirsson](https://github.com/Skuldur) for providing the machine learning Model, we used
+to train with our dataset.
+
+
