@@ -1,70 +1,38 @@
-# ML Music Generator - Web App
+# Classical Piano Composer
 
-This web app is capable of generating pieces of music as a WAV audiofile with a machine learning algorithm that was
-trained with 20 songs of popular artists.
+This project allows you to train a neural network to generate midi music files that make use of a single instrument
 
 ## Requirements
 
-To get this web app running, you need to install the node.js and python dependencies.
+* Python 3.x
+* Installing the following packages using pip:
+	* Music21
+	* Keras
+	* Tensorflow
+	* h5py
 
-For node.js:
-```
-npm install
-```
+## Training
 
-For python (with pip):
-```
-pip install music21
-pip install keras
-pip install tensorflow
-pip install h5py
-```
+To train the network you run **lstm.py**.
 
-Optionally, if you want to get faster generation, you can install the GPU-version of TensorFlow. This will only
-work, if you have a supported graphics card, with the additional software and drivers installed.
-```
-pip install tensorflow-gpu
-```
-
-### Getting Started
-
-To run the app, simply start the app.js file with node.js
-The app is running by default on port 3000.
-
-```javascript
-app.listen(3000);
-```
-To go to the webpage type loclahost:3000 into your browser.
-
-The model generates midi files by running the Python Tensoreflow Model.
-
-```javascript
-   PythonShell.run('predict.py', options, function (err) {
-            if (err) throw err;
-            resolve('done');
-```
-
-These will be then converted to wav files with synth-js.
-
-```javascript
-let convertToMidi = function () {
-    let midiBuffer = fs.readFileSync('Classical-Piano-Composer-master/pytest_output.mid');
-    let wavBuffer = synth.midiToWav(midiBuffer).toBuffer();
-    fs.writeFileSync('./assets/song.wav', wavBuffer, { encoding: 'binary' });
-```
+E.g.
 
 ```
-node app.js
+python lstm.py
 ```
 
-## Authors
+The network will use every midi file in ./midi_songs to train the network. The midi files should only contain a single instrument to get the most out of the training.
 
-* **Lennart Paul**
-* **Nicolas Martin**
+**NOTE**: You can stop the process at any point in time and the weights from the latest completed epoch will be available for text generation purposes.
 
-## Acknowledgments
+## Generating music
 
-Thanks to Sigurður [Skúli Sigurgeirsson](https://github.com/Skuldur) for providing the machine learning Model, we used
-to train with our dataset.
+Once you have trained the network you can generate text using **predict.py**
 
+E.g.
 
+```
+python predict.py
+```
+
+You can run the prediction file right away using the **weights.hdf5** file

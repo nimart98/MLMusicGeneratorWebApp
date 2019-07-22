@@ -29,6 +29,29 @@ pip install tensorflow-gpu
 ### Getting Started
 
 To run the app, simply start the app.js file with node.js
+The app is running by default on port 3000.
+
+```javascript
+app.listen(3000);
+```
+To go to the webpage type loclahost:3000 into your browser.
+
+The model generates midi files by running the Python Tensoreflow Model.
+
+```javascript
+   PythonShell.run('predict.py', options, function (err) {
+            if (err) throw err;
+            resolve('done');
+```
+
+These will be then converted to wav files with synth-js.
+
+```javascript
+let convertToMidi = function () {
+    let midiBuffer = fs.readFileSync('Classical-Piano-Composer-master/pytest_output.mid');
+    let wavBuffer = synth.midiToWav(midiBuffer).toBuffer();
+    fs.writeFileSync('./assets/song.wav', wavBuffer, { encoding: 'binary' });
+```
 
 ```
 node app.js
