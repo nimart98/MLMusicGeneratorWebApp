@@ -28,14 +28,15 @@ pip install tensorflow-gpu
 
 ### Getting Started
 
-To run the app, simply start the app.js file with node.js
+To run the app, simply start the app.js file with node.js. 
 By default the app is running on port 3000.
-It can take up to one minute to complete the creation. So be patient after clicking on the generate button.
 
 ```javascript
 app.listen(3000);
 ```
-To go to the webpage type loclahost:3000 into your browser.
+To go to the webpage type "loclahost:3000" into your browser. 
+It can take up to one minute to complete the creation of the file. So be patient after clicking on the generate button on the website.
+
 
 The model generates midi files by running the Python Tensoreflow Model.
 
