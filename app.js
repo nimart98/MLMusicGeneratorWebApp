@@ -20,7 +20,7 @@ app.set('view engine', 'ejs');
 app.use('/assets', express.static('assets'));
 
 app.post('/download', function(req, res){
-    var file = __dirname + '/assets/song.wav';
+    var file = __dirname + '/song.wav';
     var filename = path.basename(file);
     res.setHeader('Content-disposition', 'attachment; filename=' + filename);
     var filestream = fs.createReadStream(file);
@@ -36,16 +36,10 @@ app.get('/', function (req, res) {
 });
 
 app.post('/', function (req, res) {
-    let rePromise = new Promise(function(resolve, reject, err){
-        generateMidi();  
-        setTimeout(() => resolve(res), 25000)
-    }); 
-    rePromise.then((message) => {
-        message.redirect('/download');
-    });
+        generateMidi(res);
 });
 
-let generateMidi = function () {
+let generateMidi = function (res) {
     let promise = new Promise(function (resolve, reject, err) {
         PythonShell.run('predict.py', options, function (err) {
             if (err) throw err;
@@ -54,18 +48,21 @@ let generateMidi = function () {
         });
     });
     promise.then(() => {
-        convertToMidi();
+        convertToMidi(res)
         return console.log('finished conversion')
     }).catch((message) => {
         console.log('this is in chatch ' + message)
     });
 }
 
-let convertToMidi = function () {
+let convertToMidi = function (res) {
     let midiBuffer = fs.readFileSync('Classical-Piano-Composer-master/pytest_output.mid');
     let wavBuffer = synth.midiToWav(midiBuffer).toBuffer();
-    fs.writeFileSync('./assets/song.wav', wavBuffer, { encoding: 'binary' });
+    fs.writeFileSync('./song.wav', wavBuffer, { encoding: 'binary' });
+    res.redirect('/download');
 };
+
+
 
 app.listen(3000);
 

@@ -9,8 +9,6 @@ from keras.layers import Dropout
 from keras.layers import LSTM
 from keras.layers import Activation
 
-print('started script')
-
 def generate():
     """ Generate a piano midi file """
     #load the notes used to train the model
@@ -32,7 +30,7 @@ def prepare_sequences(notes, pitchnames, n_vocab):
     # map between notes and integers and back
     note_to_int = dict((note, number) for number, note in enumerate(pitchnames))
 
-    sequence_length = 10
+    sequence_length = 100
     network_input = []
     output = []
     for i in range(0, len(notes) - sequence_length, 1):
