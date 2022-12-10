@@ -12,7 +12,7 @@
     "body-parser": "^1.18.3",
     "bootstrap": "^4.3.1",
     "ejs": "^2.6.1",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "finalhandler": "^1.1.1",
     "midi-player-js": "^2.0.5",
     "mime": "^2.4.4",
